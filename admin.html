@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>采毓新聞 · 管理後台</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#1a5fa8;--blue-d:#0f4285;--blue-l:#e8f0fb;
+  --green:#16a34a;--green-l:#dcfce7;
+  --red:#d93025;--red-l:#fff0f0;
+  --yellow:#f59e0b;--yellow-l:#fef3c7;
+  --text:#1a1a1a;--t2:#444;--muted:#888;
+  --border:#ddd;--bg:#f0f0f0;--white:#fff;
+  --serif:'Noto Serif TC',serif;--sans:'Noto Sans TC',sans-serif;
+}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:100vh}
+.topbar{background:#1a1a2e;color:#aaa;font-size:11px;padding:8px 0;letter-spacing:.5px;text-align:center}
+.container{max-width:600px;margin:0 auto;padding:24px 16px}
+.card{background:var(--white);border:1px solid var(--border);border-top:4px solid var(--blue);padding:32px;margin-bottom:16px}
+.title{font-family:var(--serif);font-size:22px;font-weight:900;color:var(--blue);margin-bottom:4px}
+.sub{font-size:11px;color:var(--muted);letter-spacing:1.5px;margin-bottom:24px}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.fl{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.fi{border:1px solid var(--border);padding:10px 12px;font-size:14px;font-family:var(--sans);color:var(--text);outline:none;transition:border-color .15s;width:100%;background:white;border-radius:3px}
+.fi:focus{border-color:var(--blue)}
+.btn{background:var(--blue);color:white;border:none;padding:10px 18px;font-size:14px;font-family:var(--sans);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:3px;transition:background .15s;width:100%;font-weight:500}
+.btn:hover{background:var(--blue-d)}
+.btn:disabled{background:#ccc;cursor:not-allowed}
+.btn-big{font-size:16px;padding:14px 18px;font-weight:700}
+.btn-ghost{background:none;border:1px solid var(--border);color:var(--t2);padding:8px 14px;font-size:13px;font-family:var(--sans);cursor:pointer;border-radius:3px;transition:all .15s}
+.btn-ghost:hover{border-color:var(--muted);color:var(--text)}
+.alert{padding:10px 14px;font-size:13px;margin-bottom:14px;border-radius:3px;line-height:1.5}
+.alert-err{background:var(--red-l);border:1px solid #fcc;color:var(--red)}
+.alert-ok{background:var(--green-l);border:1px solid #abe5b8;color:#155724}
+.alert-warn{background:var(--yellow-l);border:1px solid #fde68a;color:#92400e}
+.alert-info{background:var(--blue-l);border:1px solid #b8d4f0;color:var(--blue-d)}
+.help{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.6}
+.help a{color:var(--blue)}
+.divider{border-top:1px solid var(--border);margin:20px 0}
+.section-title{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--blue);margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--blue)}
+.run-list{display:flex;flex-direction:column;gap:6px}
+.run-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fafafa;border:1px solid var(--border);border-radius:3px;font-size:12px}
+.run-status{font-size:14px;flex-shrink:0;width:18px;text-align:center}
+.run-info{flex:1;min-width:0}
+.run-time{color:var(--muted);font-size:11px}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.kbd{background:#eee;border:1px solid #ccc;padding:1px 5px;font-size:11px;font-family:monospace;border-radius:2px}
+.row{display:flex;gap:8px;align-items:center;margin-top:10px}
+.checkbox{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--t2);cursor:pointer;margin-top:8px}
+.footer{text-align:center;font-size:11px;color:var(--muted);padding:20px;letter-spacing:.5px}
+.footer a{color:var(--blue);text-decoration:none}
+.tag-private{display:inline-block;background:var(--yellow);color:white;font-size:10px;padding:2px 6px;border-radius:2px;letter-spacing:1px;margin-left:8px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="topbar">采毓新聞 · 管理後台 · NEWS CMS ADMIN</div>
+
+<div class="container">
+  <div id="app"></div>
+</div>
+
+<div class="footer">
+  © 2025 采毓活動整合行銷有限公司　|　
+  <a href="index.html">← 返回前台首頁</a>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// ⚙️ 設定區：把下面的值改成你自己的
+// ═══════════════════════════════════════════════════════════
+
+const ADMIN_PASSWORD = "caiyu2025";       // ⚠️ 改成你自己的密碼
+const GITHUB_OWNER = "havoc0679-jpg";      // ⚠️ 改成你的 GitHub 帳號
+const GITHUB_REPO = "caiyu-news-pipeline"; // 通常不用改
+const WORKFLOW_FILE = "auto-update.yml";   // 通常不用改
+
+// ═══════════════════════════════════════════════════════════
+
+const app = document.getElementById("app");
+const PAT_KEY = "caiyu_admin_pat";
+const SESSION_KEY = "caiyu_admin_session";
+
+// ── 路由 ─────────────────────────────────────
+function route() {
+  const session = sessionStorage.getItem(SESSION_KEY);
+  if (session === "ok") {
+    renderPanel();
+  } else {
+    renderLogin();
+  }
+}
+
+// ── 登入畫面 ─────────────────────────────────
+function renderLogin() {
+  app.innerHTML = `
+    <div class="card">
+      <div class="title">🔒 管理後台</div>
+      <div class="sub">需要密碼進入</div>
+      <div id="alert-area"></div>
+      <form id="login-form">
+        <div class="fg">
+          <label class="fl">管理員密碼</label>
+          <input class="fi" type="password" id="password" placeholder="請輸入密碼" autofocus>
+        </div>
+        <button class="btn" type="submit">進入後台</button>
+      </form>
+    </div>
+  `;
+  document.getElementById("login-form").addEventListener("submit", e => {
+    e.preventDefault();
+    const pw = document.getElementById("password").value;
+    if (pw === ADMIN_PASSWORD) {
+      sessionStorage.setItem(SESSION_KEY, "ok");
+      renderPanel();
+    } else {
+      showAlert("alert-area", "密碼錯誤，請重試", "err");
+    }
+  });
+}
+
+// ── 管理面板 ──────────────────────────────────
+function renderPanel() {
+  const savedPat = localStorage.getItem(PAT_KEY);
+  app.innerHTML = `
+    <div class="card">
+      <div class="title">⚡ 立即抓取新聞</div>
+      <div class="sub">手動觸發 GitHub Actions 立刻執行 pipeline</div>
+      <div id="alert-area"></div>
+
+      ${!savedPat ? `
+        <div class="alert alert-warn">
+          ⚠️ <strong>第一次使用</strong>：請先設定 GitHub Personal Access Token（PAT）
+        </div>
+        <div class="fg">
+          <label class="fl">GitHub Personal Access Token</label>
+          <input class="fi" type="password" id="pat" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxx" autofocus>
+          <div class="help">
+            還沒有 PAT？看下方說明，或點 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">這裡建立</a>
+          </div>
+          <label class="checkbox">
+            <input type="checkbox" id="remember" checked>
+            記住此 Token（存在這台電腦的瀏覽器，下次不用再貼）
+          </label>
+        </div>
+      ` : ""}
+
+      <button class="btn btn-big" id="trigger-btn" ${!savedPat ? "" : ""}>
+        🔄 立即抓取新聞
+      </button>
+
+      ${savedPat ? `
+        <div class="row">
+          <button class="btn-ghost" id="clear-pat">清除已存的 Token</button>
+          <button class="btn-ghost" id="logout">登出</button>
+        </div>
+      ` : ""}
+    </div>
+
+    <div class="card">
+      <div class="section-title">📊 最近執行紀錄</div>
+      <div id="runs-area">
+        <div class="alert alert-info">載入中…</div>
+      </div>
+    </div>
+
+    ${!savedPat ? `
+      <div class="card">
+        <div class="section-title">🔑 如何取得 GitHub PAT</div>
+        <div class="help" style="font-size:13px;line-height:1.8">
+          <strong>1.</strong> 前往 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">GitHub PAT 建立頁面</a><br>
+          <strong>2.</strong> 填寫：<br>
+          　• Token name：<span class="kbd">caiyu-news-trigger</span><br>
+          　• Expiration：<span class="kbd">90 days</span> 或更長<br>
+          　• Repository access：選 <span class="kbd">Only select repositories</span> → 選 <span class="kbd">${GITHUB_REPO}</span><br>
+          <strong>3.</strong> 在 Repository permissions 找到 <strong>Actions</strong>，下拉選 <span class="kbd">Read and write</span><br>
+          <strong>4.</strong> 拉到最下面 <strong>Generate token</strong><br>
+          <strong>5.</strong> 跳出來的 <span class="kbd">github_pat_xxx...</span> 立刻複製貼到上方輸入框（離開頁面就再也看不到）
+        </div>
+      </div>
+    ` : ""}
+  `;
+
+  // 觸發按鈕
+  document.getElementById("trigger-btn").addEventListener("click", handleTrigger);
+
+  // 清除 token
+  if (savedPat) {
+    document.getElementById("clear-pat").addEventListener("click", () => {
+      if (confirm("確定要清除已存的 Token？")) {
+        localStorage.removeItem(PAT_KEY);
+        renderPanel();
+      }
+    });
+    document.getElementById("logout").addEventListener("click", () => {
+      sessionStorage.removeItem(SESSION_KEY);
+      renderLogin();
+    });
+  }
+
+  // 載入最近執行紀錄
+  if (savedPat) {
+    loadRecentRuns(savedPat);
+  } else {
+    document.getElementById("runs-area").innerHTML = `<div class="help">設定好 Token 後就會顯示</div>`;
+  }
+}
+
+// ── 觸發 workflow ─────────────────────────────
+async function handleTrigger() {
+  const btn = document.getElementById("trigger-btn");
+  let pat = localStorage.getItem(PAT_KEY);
+
+  // 如果還沒有 PAT，從輸入框拿
+  if (!pat) {
+    const input = document.getElementById("pat");
+    pat = input ? input.value.trim() : "";
+    if (!pat) {
+      showAlert("alert-area", "請先輸入 GitHub PAT", "err");
+      return;
+    }
+    const remember = document.getElementById("remember")?.checked;
+    if (remember) {
+      localStorage.setItem(PAT_KEY, pat);
+    }
+  }
+
+  // 確認 GitHub 帳號設定
+  if (GITHUB_OWNER === "你的GitHub帳號") {
+    showAlert("alert-area", "請先在 admin.html 開頭把 GITHUB_OWNER 改成你自己的 GitHub 帳號", "err");
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span> 觸發中...`;
+
+  try {
+    const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/actions/workflows/${WORKFLOW_FILE}/dispatches`;
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Accept": "application/vnd.github+json",
+        "Authorization": `Bearer ${pat}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+      body: JSON.stringify({ ref: "main" }),
+    });
+
+    if (res.status === 204) {
+      showAlert("alert-area",
+        "✅ 已成功觸發！pipeline 大約 30-90 秒後完成。<br><small>稍後可到前台首頁看新文章，或往下看執行紀錄。</small>",
+        "ok"
+      );
+      // 等 2 秒重新載入紀錄
+      setTimeout(() => loadRecentRuns(pat), 2000);
+      // 若是首次設定，重新渲染面板
+      if (!localStorage.getItem(PAT_KEY)) {
+        setTimeout(renderPanel, 1500);
+      }
+    } else {
+      const txt = await res.text();
+      let detail = txt;
+      try { detail = JSON.parse(txt).message || txt; } catch {}
+      showAlert("alert-area", `❌ 觸發失敗 (${res.status}): ${detail}`, "err");
+    }
+  } catch (e) {
+    showAlert("alert-area", `❌ 網路錯誤：${e.message}`, "err");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = "🔄 立即抓取新聞";
+  }
+}
+
+// ── 載入最近執行紀錄 ──────────────────────────
+async function loadRecentRuns(pat) {
+  const area = document.getElementById("runs-area");
+  if (!area) return;
+
+  if (GITHUB_OWNER === "你的GitHub帳號") {
+    area.innerHTML = `<div class="help">請先設定 GITHUB_OWNER</div>`;
+    return;
+  }
+
+  try {
+    const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/actions/workflows/${WORKFLOW_FILE}/runs?per_page=5`;
+    const res = await fetch(url, {
+      headers: {
+        "Accept": "application/vnd.github+json",
+        "Authorization": `Bearer ${pat}`,
+      }
+    });
+    if (!res.ok) {
+      area.innerHTML = `<div class="alert alert-err">無法載入紀錄 (${res.status})</div>`;
+      return;
+    }
+    const data = await res.json();
+    const runs = data.workflow_runs || [];
+    if (runs.length === 0) {
+      area.innerHTML = `<div class="help">尚無執行紀錄</div>`;
+      return;
+    }
+    area.innerHTML = `<div class="run-list">${runs.map(r => {
+      let icon = "⏳";
+      if (r.status === "completed") {
+        icon = r.conclusion === "success" ? "✅" : "❌";
+      } else if (r.status === "in_progress") {
+        icon = "🟡";
+      } else if (r.status === "queued") {
+        icon = "⌛";
+      }
+      const time = new Date(r.created_at).toLocaleString("zh-TW", { hour12: false });
+      const trigger = r.event === "workflow_dispatch" ? "手動觸發" : r.event === "schedule" ? "排程觸發" : r.event;
+      return `<div class="run-item">
+        <div class="run-status">${icon}</div>
+        <div class="run-info">
+          <div><strong>${trigger}</strong> · ${r.status === "completed" ? r.conclusion : r.status}</div>
+          <div class="run-time">${time}</div>
+        </div>
+        <a href="${r.html_url}" target="_blank" class="btn-ghost" style="font-size:11px;padding:4px 8px;text-decoration:none">看詳情</a>
+      </div>`;
+    }).join("")}</div>`;
+  } catch (e) {
+    area.innerHTML = `<div class="alert alert-err">載入失敗：${e.message}</div>`;
+  }
+}
+
+// ── 工具：顯示 alert ──────────────────────────
+function showAlert(targetId, msg, type) {
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  el.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
+  if (type === "ok") {
+    setTimeout(() => { el.innerHTML = ""; }, 6000);
+  }
+}
+
+// 啟動
+route();
+</script>
+</body>
+</html>
