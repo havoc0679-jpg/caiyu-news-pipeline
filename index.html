@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>采毓新聞 · 媒體中心</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#1a5fa8;--blue-d:#0f4285;--blue-l:#e8f0fb;
+  --red:#d93025;--text:#1a1a1a;--t2:#444;--muted:#888;
+  --border:#ddd;--bg:#f0f0f0;--white:#fff;
+  --serif:'Noto Serif TC',serif;--sans:'Noto Sans TC',sans-serif;
+}
+body{background:var(--bg);font-family:var(--sans)}
+#root{min-height:100vh}
+.app{font-family:var(--sans);color:var(--text);min-height:100vh;background:var(--bg)}
+.topbar{background:var(--blue-d);color:rgba(255,255,255,0.75);font-size:11px;padding:5px 0;letter-spacing:.5px}
+.topbar-i{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;justify-content:space-between}
+.hdr{background:var(--white);border-bottom:3px solid var(--blue);padding:14px 0}
+.hdr-i{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex:1}
+.logo-circle{width:46px;height:46px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-family:var(--serif);font-weight:900;font-size:20px;flex-shrink:0}
+.logo-txt{font-family:var(--serif);font-size:20px;font-weight:900;color:var(--blue)}
+.logo-sub{font-size:10px;color:var(--muted);letter-spacing:1px}
+.hsearch{display:flex;align-items:center;border:1px solid var(--border)}
+.hsearch input{border:none;outline:none;padding:8px 12px;font-size:13px;font-family:var(--sans);width:180px}
+.hsearch button{background:var(--blue);border:none;color:white;padding:8px 12px;cursor:pointer;display:flex;align-items:center}
+.hsearch button:hover{background:var(--blue-d)}
+.refresh-btn{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px;cursor:pointer;padding:6px 10px;border:1px solid var(--border);white-space:nowrap;background:none;transition:all .15s;font-family:var(--sans)}
+.refresh-btn:hover{color:var(--blue);border-color:var(--blue)}
+.nav{background:var(--blue);overflow-x:auto}
+.nav-i{max-width:1100px;margin:0 auto;padding:0 16px;display:flex}
+.nbtn{background:none;border:none;color:rgba(255,255,255,.85);font-family:var(--sans);font-size:13px;font-weight:500;padding:10px 14px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s}
+.nbtn:hover{color:white;background:rgba(255,255,255,.1)}
+.nbtn.on{color:white;border-bottom-color:white;font-weight:700}
+.wrap{max-width:1100px;margin:20px auto;padding:0 16px;display:grid;grid-template-columns:1fr 290px;gap:20px}
+.wrap.full{grid-template-columns:1fr}
+.sh{border-bottom:2px solid var(--blue);margin-bottom:14px;display:flex;align-items:flex-end;padding-bottom:5px}
+.st{font-family:var(--serif);font-size:17px;font-weight:900;color:var(--blue)}
+.sm{font-size:12px;color:var(--muted);margin-left:auto;cursor:pointer}
+.sm:hover{color:var(--blue)}
+.fb{background:var(--white);border:1px solid var(--border);margin-bottom:18px}
+.fmain{display:grid;grid-template-columns:1fr 1fr}
+.fhero{cursor:pointer;overflow:hidden}
+.fhero-placeholder{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,var(--blue) 0%,var(--blue-d) 100%);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.3);font-family:var(--serif);font-size:48px;font-weight:900}
+.fhero img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .4s}
+.fhero:hover img{transform:scale(1.03)}
+.fhbody{padding:14px 18px 18px}
+.fcat{font-size:10px;font-weight:700;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px}
+.ftitle{font-family:var(--serif);font-size:17px;font-weight:700;line-height:1.5;margin-bottom:7px;cursor:pointer;color:var(--text)}
+.ftitle:hover{color:var(--blue)}
+.fsum{font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:8px}
+.fmeta{font-size:11px;color:var(--muted)}
+.fside{border-left:1px solid var(--border);display:flex;flex-direction:column}
+.fsi{padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;display:flex;gap:10px}
+.fsi:last-child{border-bottom:none}
+.fsi:hover{background:var(--blue-l)}
+.fsi-img{width:80px;height:58px;object-fit:cover;flex-shrink:0;background:var(--blue-l)}
+.fsi-no-img{width:80px;height:58px;background:linear-gradient(135deg,var(--blue) 0%,var(--blue-d) 100%);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-family:var(--serif);font-size:20px;font-weight:900}
+.fsi-cat{font-size:10px;font-weight:700;color:var(--blue);letter-spacing:1px;margin-bottom:3px;text-transform:uppercase}
+.fsi-t{font-size:13px;font-weight:600;line-height:1.45;margin-bottom:3px}
+.fsi-d{font-size:11px;color:var(--muted)}
+.alist{display:flex;flex-direction:column;gap:1px;background:var(--border)}
+.ait{background:var(--white);padding:13px 14px;display:flex;gap:12px;cursor:pointer;transition:background .15s}
+.ait:hover{background:var(--blue-l)}
+.ait-img{width:96px;height:68px;object-fit:cover;flex-shrink:0;background:var(--blue-l)}
+.ait-no-img{width:96px;height:68px;background:linear-gradient(135deg,var(--blue) 0%,var(--blue-d) 100%);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-family:var(--serif);font-size:24px;font-weight:900}
+.ait-b{flex:1;min-width:0}
+.ait-cat{font-size:10px;font-weight:700;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px}
+.ait-t{font-family:var(--serif);font-size:15px;font-weight:700;line-height:1.5;margin-bottom:5px}
+.ait-s{font-size:12px;color:var(--t2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ait-m{font-size:11px;color:var(--muted);margin-top:5px;display:flex;justify-content:space-between}
+.ai-badge{display:inline-block;font-size:9px;background:var(--red);color:white;padding:1px 5px;margin-left:5px;letter-spacing:0.5px;border-radius:2px;vertical-align:middle}
+.sb{}
+.scard{background:var(--white);border:1px solid var(--border);margin-bottom:16px}
+.shead{background:var(--blue);color:white;font-family:var(--serif);font-size:13px;font-weight:700;padding:8px 12px;letter-spacing:1px}
+.slist{padding:2px 0}
+.sli{display:flex;gap:10px;padding:9px 12px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.sli:last-child{border-bottom:none}
+.sli:hover{background:var(--blue-l)}
+.sli-img{width:58px;height:42px;object-fit:cover;flex-shrink:0;background:var(--blue-l)}
+.sli-t{font-size:13px;color:var(--text);line-height:1.5;font-weight:500}
+.sli-d{font-size:11px;color:var(--muted);margin-top:3px}
+.scats{padding:4px 0}
+.scit{display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #f0f0f0;cursor:pointer;font-size:13px;color:var(--t2);transition:all .15s}
+.scit:hover{color:var(--blue);background:var(--blue-l)}
+.scit:last-child{border-bottom:none}
+.scn{font-size:11px;color:var(--muted)}
+.dw{max-width:760px}
+.dbk{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:14px;transition:color .15s;background:none;border:none;font-family:var(--sans)}
+.dbk:hover{color:var(--blue)}
+.dcat{font-size:10px;font-weight:700;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.dtitle{font-family:var(--serif);font-size:24px;font-weight:900;line-height:1.5;margin-bottom:12px}
+.dmeta{font-size:12px;color:var(--muted);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);display:flex;gap:16px;flex-wrap:wrap}
+.dimg{width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:18px}
+.dlead{font-family:var(--serif);font-size:14px;color:var(--t2);line-height:1.9;padding:14px;background:var(--blue-l);border-left:4px solid var(--blue);margin-bottom:18px}
+.dbody{font-size:14px;color:var(--t2);line-height:2;white-space:pre-line}
+.dtags{margin-top:20px;padding-top:14px;border-top:1px solid var(--border);display:flex;gap:7px;flex-wrap:wrap}
+.dtag{font-size:11px;color:var(--blue);border:1px solid var(--blue);padding:3px 8px;background:var(--blue-l)}
+.dsource{margin-top:16px;padding:12px;background:#fafafa;border-left:3px solid var(--muted);font-size:12px;color:var(--muted)}
+.dsource a{color:var(--blue);text-decoration:none}
+.footer{background:#1a1a2e;color:#777;font-size:11px;padding:18px;text-align:center;margin-top:20px}
+.footer a{color:#aaa;text-decoration:none}
+.empty{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty h3{font-family:var(--serif);font-size:17px;color:var(--text);margin-bottom:5px}
+.loading{display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:10px;color:var(--muted)}
+.spinner{width:30px;height:30px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.error-banner{background:#fff0f0;border:1px solid #fcc;color:var(--red);padding:12px 16px;margin:16px;font-size:13px;border-radius:4px}
+@media(max-width:768px){
+  .wrap{grid-template-columns:1fr}
+  .fmain{grid-template-columns:1fr}
+  .fside{border-left:none;border-top:1px solid var(--border)}
+  .hsearch input{width:110px}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+// ═══════════════════════════════════════════════════════════
+// ⚙️ 設定區：把下面兩個值改成你自己的
+// ═══════════════════════════════════════════════════════════
+
+const SUPABASE_URL = "https://htlxogcyzilghxkqlbej.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_EkUBIXqnmHCJEnXM_OXcFQ_BdreP9d3";
+
+// ═══════════════════════════════════════════════════════════
+
+const CATS = ["最新文章","足球","籃球","田徑","網球","排球","棒球","活動產業","科技展演","其他"];
+
+// 從 Supabase 拿文章
+async function fetchArticles() {
+  const url = `${SUPABASE_URL}/rest/v1/articles?select=*&is_published=eq.true&order=published_at.desc&limit=100`;
+  const res = await fetch(url, {
+    headers: {
+      "apikey": SUPABASE_ANON_KEY,
+      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+    }
+  });
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(`HTTP ${res.status}: ${txt}`);
+  }
+  return await res.json();
+}
+
+function App() {
+  const [arts, setArts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [view, setView] = useState("home");
+  const [selId, setSelId] = useState(null);
+  const [cat, setCat] = useState("最新文章");
+  const [search, setSearch] = useState("");
+  const [sq, setSq] = useState("");
+
+  async function refresh() {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchArticles();
+      setArts(data);
+    } catch (e) {
+      console.error(e);
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => { refresh(); }, []);
+
+  const shown = arts.filter(a => {
+    const mc = cat === "最新文章" || a.category === cat;
+    const ms = !sq || a.title.includes(sq) || (a.summary || "").includes(sq);
+    return mc && ms;
+  });
+  const feat = arts.filter(a => a.featured).slice(0, 4);
+  const sel = arts.find(a => a.id === selId);
+
+  function go(id) { setSelId(id); setView("detail"); window.scrollTo(0, 0); }
+  function home() { setView("home"); setSelId(null); }
+  function doSearch(e) { e.preventDefault(); setSq(search); setCat("最新文章"); setView("home"); }
+
+  const catCounts = CATS.slice(1).map(c => ({ c, n: arts.filter(a => a.category === c).length }));
+  const today = new Date().toLocaleDateString("zh-TW", { year: "numeric", month: "long", day: "numeric", weekday: "long" });
+
+  function fmtDate(d) {
+    if (!d) return "";
+    return d.replace("T", " ").slice(0, 16);
+  }
+
+  function categoryInitial(cat) {
+    const map = { "足球": "⚽", "籃球": "🏀", "田徑": "🏃", "網球": "🎾", "排球": "🏐", "棒球": "⚾", "活動產業": "🎪", "科技展演": "🚀" };
+    return map[cat] || "新";
+  }
+
+  return (
+    <div className="app">
+      <div className="topbar">
+        <div className="topbar-i">
+          <span>{today}</span>
+          <span>采毓活動整合行銷有限公司 · 媒體中心</span>
+        </div>
+      </div>
+
+      <div className="hdr">
+        <div className="hdr-i">
+          <div className="logo" onClick={home}>
+            <div className="logo-circle">采</div>
+            <div>
+              <div className="logo-txt">采毓新聞</div>
+              <div className="logo-sub">CAIYU MEDIA CENTER</div>
+            </div>
+          </div>
+          <form className="hsearch" onSubmit={doSearch}>
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="搜尋新聞…" />
+            <button type="submit">🔍</button>
+          </form>
+          <button className="refresh-btn" onClick={refresh}>🔄 重新整理</button>
+        </div>
+      </div>
+
+      <div className="nav">
+        <div className="nav-i">
+          {CATS.map(c => (
+            <button key={c} className={`nbtn ${cat === c ? "on" : ""}`}
+              onClick={() => { setCat(c); setSq(""); setSearch(""); setView("home"); }}>
+              {c}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {error && (
+        <div className="error-banner">
+          <strong>⚠️ 連線錯誤：</strong>{error}
+          <br/><small>請確認 Supabase 設定是否正確（HTML 開頭的 SUPABASE_URL 和 SUPABASE_ANON_KEY）</small>
+        </div>
+      )}
+
+      {loading ? (
+        <div className="loading">
+          <div className="spinner"></div>
+          <div>載入新聞中…</div>
+        </div>
+      ) : (
+        <div className={`wrap ${view === "detail" ? "full" : ""}`}>
+          {view === "home" && (
+            <>
+              <div>
+                <div className="sh">
+                  <span className="st">{sq ? `搜尋：「${sq}」` : cat === "最新文章" ? "最新文章" : cat}</span>
+                  <span className="sm">共 {shown.length} 則</span>
+                </div>
+
+                {cat === "最新文章" && !sq && feat.length > 0 && (
+                  <div className="fb">
+                    <div className="fmain">
+                      {feat[0] && (
+                        <div>
+                          <div className="fhero" onClick={() => go(feat[0].id)}>
+                            {feat[0].image
+                              ? <img src={feat[0].image} alt={feat[0].title} />
+                              : <div className="fhero-placeholder">{categoryInitial(feat[0].category)}</div>
+                            }
+                          </div>
+                          <div className="fhbody">
+                            <div className="fcat">{feat[0].category}{feat[0].is_ai_generated && <span className="ai-badge">AI</span>}</div>
+                            <div className="ftitle" onClick={() => go(feat[0].id)}>{feat[0].title}</div>
+                            <div className="fsum">{feat[0].summary}</div>
+                            <div className="fmeta">{feat[0].author} ／ {fmtDate(feat[0].published_at)}</div>
+                          </div>
+                        </div>
+                      )}
+                      <div className="fside">
+                        {feat.slice(1, 4).map(a => (
+                          <div key={a.id} className="fsi" onClick={() => go(a.id)}>
+                            {a.image
+                              ? <img src={a.image} alt={a.title} className="fsi-img" />
+                              : <div className="fsi-no-img">{categoryInitial(a.category)}</div>
+                            }
+                            <div>
+                              <div className="fsi-cat">{a.category}</div>
+                              <div className="fsi-t">{a.title}</div>
+                              <div className="fsi-d">{fmtDate(a.published_at)}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {shown.length === 0 ? (
+                  <div className="empty">
+                    <h3>{arts.length === 0 ? "目前還沒有文章" : "找不到相關文章"}</h3>
+                    <p>{arts.length === 0 ? "等自動化腳本跑過幾次，文章就會出現了" : "試試調整搜尋條件或切換分類"}</p>
+                  </div>
+                ) : (
+                  <div className="alist">
+                    {shown.map(a => (
+                      <div key={a.id} className="ait" onClick={() => go(a.id)}>
+                        {a.image
+                          ? <img src={a.image} alt={a.title} className="ait-img" />
+                          : <div className="ait-no-img">{categoryInitial(a.category)}</div>
+                        }
+                        <div className="ait-b">
+                          <div className="ait-cat">{a.category}{a.is_ai_generated && <span className="ai-badge">AI</span>}</div>
+                          <div className="ait-t">{a.title}</div>
+                          <div className="ait-s">{a.summary}</div>
+                          <div className="ait-m">
+                            <span>{a.author}</span>
+                            <span>{fmtDate(a.published_at)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <aside className="sb">
+                <div className="scard">
+                  <div className="shead">精選推薦</div>
+                  <div className="slist">
+                    {arts.filter(a => a.featured).slice(0, 4).map(a => (
+                      <div key={a.id} className="sli" onClick={() => go(a.id)}>
+                        {a.image
+                          ? <img src={a.image} alt={a.title} className="sli-img" />
+                          : <div className="fsi-no-img" style={{width:58,height:42,fontSize:16}}>{categoryInitial(a.category)}</div>
+                        }
+                        <div>
+                          <div className="sli-t">{a.title}</div>
+                          <div className="sli-d">{fmtDate(a.published_at)}</div>
+                        </div>
+                      </div>
+                    ))}
+                    {arts.filter(a => a.featured).length === 0 && (
+                      <div style={{padding:14,fontSize:12,color:"var(--muted)"}}>尚無精選文章</div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="scard">
+                  <div className="shead">文章分類</div>
+                  <div className="scats">
+                    {catCounts.filter(x => x.n > 0).map(({ c, n }) => (
+                      <div key={c} className="scit" onClick={() => { setCat(c); setSq(""); setSearch(""); }}>
+                        <span>{c}</span><span className="scn">{n}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </aside>
+            </>
+          )}
+
+          {view === "detail" && sel && (
+            <div>
+              <div className="dw">
+                <button className="dbk" onClick={home}>← 返回列表</button>
+                <div className="dcat">{sel.category}{sel.is_ai_generated && <span className="ai-badge">AI 輔助</span>}</div>
+                <h1 className="dtitle">{sel.title}</h1>
+                <div className="dmeta">
+                  <span>✍ {sel.author}</span>
+                  <span>📅 {fmtDate(sel.published_at)}</span>
+                </div>
+                {sel.image && <img src={sel.image} alt={sel.title} className="dimg" />}
+                {sel.summary && <div className="dlead">{sel.summary}</div>}
+                <div className="dbody">{sel.content}</div>
+                {sel.tags && sel.tags.length > 0 && (
+                  <div className="dtags">{sel.tags.map(t => <span key={t} className="dtag">#{t}</span>)}</div>
+                )}
+                {sel.source_url && (
+                  <div className="dsource">
+                    📎 資料整理自：<a href={sel.source_url} target="_blank" rel="noopener noreferrer">{sel.source_name || "原始來源"}</a>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="footer">
+        © 2025 采毓活動整合行銷有限公司 · 媒體中心 · All Rights Reserved<br/>
+        <small style={{opacity:.6}}>內容由 AI 輔助產製，每日 07:00 / 16:30 / 21:30 自動更新</small>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
