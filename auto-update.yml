@@ -1,0 +1,38 @@
+name: 采毓新聞自動更新
+
+on:
+  schedule:
+    # 台灣時間 = UTC + 8
+    # 07:00 TW = 23:00 UTC (前一天)
+    # 16:30 TW = 08:30 UTC
+    # 21:30 TW = 13:30 UTC
+    - cron: '0 23 * * *'    # 每日 07:00 TW
+    - cron: '30 8 * * *'    # 每日 16:30 TW
+    - cron: '30 13 * * *'   # 每日 21:30 TW
+  workflow_dispatch:  # 允許手動觸發測試
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 取得程式碼
+        uses: actions/checkout@v4
+
+      - name: 設定 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安裝依賴套件
+        run: |
+          pip install -r scripts/requirements.txt
+
+      - name: 執行新聞自動化腳本
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          python scripts/news_pipeline.py
