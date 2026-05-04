@@ -51,9 +51,12 @@ CLAUDE_MODEL = "claude-sonnet-4-5"
 ALLOWED_CATEGORIES = ["足球", "籃球", "田徑", "網球", "排球", "棒球", "活動產業", "科技展演", "其他"]
 
 # 環境變數讀取（GitHub Actions 會自動注入）
-ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
-SUPABASE_URL = os.environ.get("SUPABASE_URL")
-SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")  # service key, not anon key
+ANTHROPIC_API_KEY = (os.environ.get("ANTHROPIC_API_KEY") or "").strip()
+SUPABASE_URL = (os.environ.get("SUPABASE_URL") or "").strip().rstrip("/")
+SUPABASE_KEY = (os.environ.get("SUPABASE_SERVICE_KEY") or "").strip()
+
+# Debug: 印出 URL 看看實際拿到什麼（不會洩漏 key）
+print(f"🔧 SUPABASE_URL = '{SUPABASE_URL}' (長度 {len(SUPABASE_URL)})")
 
 if not all([ANTHROPIC_API_KEY, SUPABASE_URL, SUPABASE_KEY]):
     print("❌ 缺少環境變數: ANTHROPIC_API_KEY / SUPABASE_URL / SUPABASE_SERVICE_KEY")
