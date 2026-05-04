@@ -29,22 +29,22 @@ body{background:var(--bg);font-family:var(--sans)}
 .logo-txt{font-family:var(--serif);font-size:20px;font-weight:900;color:var(--blue)}
 .logo-sub{font-size:10px;color:var(--muted);letter-spacing:1px}
 .hsearch{display:flex;align-items:center;border:1px solid var(--border)}
-.hsearch input{border:none;outline:none;padding:8px 12px;font-size:13px;font-family:var(--sans);width:180px}
+.hsearch input{border:none;outline:none;padding:8px 12px;font-size:13px;font-family:var(--sans);width:160px}
 .hsearch button{background:var(--blue);border:none;color:white;padding:8px 12px;cursor:pointer;display:flex;align-items:center}
 .hsearch button:hover{background:var(--blue-d)}
 .refresh-btn{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px;cursor:pointer;padding:6px 10px;border:1px solid var(--border);white-space:nowrap;background:none;transition:all .15s;font-family:var(--sans)}
 .refresh-btn:hover{color:var(--blue);border-color:var(--blue)}
 .nav{background:var(--blue);overflow-x:auto}
 .nav-i{max-width:1100px;margin:0 auto;padding:0 16px;display:flex}
-.nbtn{background:none;border:none;color:rgba(255,255,255,.85);font-family:var(--sans);font-size:13px;font-weight:500;padding:10px 14px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s}
+.nbtn{background:none;border:none;color:rgba(255,255,255,.85);font-family:var(--sans);font-size:13px;font-weight:500;padding:10px 13px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s}
 .nbtn:hover{color:white;background:rgba(255,255,255,.1)}
 .nbtn.on{color:white;border-bottom-color:white;font-weight:700}
 .wrap{max-width:1100px;margin:20px auto;padding:0 16px;display:grid;grid-template-columns:1fr 290px;gap:20px}
 .wrap.full{grid-template-columns:1fr}
 .sh{border-bottom:2px solid var(--blue);margin-bottom:14px;display:flex;align-items:flex-end;padding-bottom:5px}
 .st{font-family:var(--serif);font-size:17px;font-weight:900;color:var(--blue)}
-.sm{font-size:12px;color:var(--muted);margin-left:auto;cursor:pointer}
-.sm:hover{color:var(--blue)}
+.sm{font-size:12px;color:var(--muted);margin-left:auto}
+.show-all{font-size:12px;color:var(--blue);cursor:pointer;margin-left:8px;text-decoration:underline}
 .fb{background:var(--white);border:1px solid var(--border);margin-bottom:18px}
 .fmain{display:grid;grid-template-columns:1fr 1fr}
 .fhero{cursor:pointer;overflow:hidden}
@@ -55,7 +55,7 @@ body{background:var(--bg);font-family:var(--sans)}
 .fcat{font-size:10px;font-weight:700;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px}
 .ftitle{font-family:var(--serif);font-size:17px;font-weight:700;line-height:1.5;margin-bottom:7px;cursor:pointer;color:var(--text)}
 .ftitle:hover{color:var(--blue)}
-.fsum{font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:8px}
+.fsum{font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .fmeta{font-size:11px;color:var(--muted)}
 .fside{border-left:1px solid var(--border);display:flex;flex-direction:column}
 .fsi{padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;display:flex;gap:10px}
@@ -77,7 +77,8 @@ body{background:var(--bg);font-family:var(--sans)}
 .ait-s{font-size:12px;color:var(--t2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .ait-m{font-size:11px;color:var(--muted);margin-top:5px;display:flex;justify-content:space-between}
 .ai-badge{display:inline-block;font-size:9px;background:var(--red);color:white;padding:1px 5px;margin-left:5px;letter-spacing:0.5px;border-radius:2px;vertical-align:middle}
-.sb{}
+.load-more{background:none;border:1px solid var(--blue);color:var(--blue);padding:10px 24px;font-size:13px;cursor:pointer;font-family:var(--sans);transition:all .15s;display:block;margin:14px auto 0;border-radius:3px}
+.load-more:hover{background:var(--blue);color:white}
 .scard{background:var(--white);border:1px solid var(--border);margin-bottom:16px}
 .shead{background:var(--blue);color:white;font-family:var(--serif);font-size:13px;font-weight:700;padding:8px 12px;letter-spacing:1px}
 .slist{padding:2px 0}
@@ -117,7 +118,7 @@ body{background:var(--bg);font-family:var(--sans)}
   .wrap{grid-template-columns:1fr}
   .fmain{grid-template-columns:1fr}
   .fside{border-left:none;border-top:1px solid var(--border)}
-  .hsearch input{width:110px}
+  .hsearch input{width:90px}
 }
 </style>
 </head>
@@ -128,19 +129,19 @@ body{background:var(--bg);font-family:var(--sans)}
 const { useState, useEffect } = React;
 
 // ═══════════════════════════════════════════════════════════
-// ⚙️ 設定區：把下面兩個值改成你自己的
+// ⚙️ 設定區
 // ═══════════════════════════════════════════════════════════
 
 const SUPABASE_URL = "https://htlxogcyzilghxkqlbej.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_EkUBIXqnmHCJEnXM_OXcFQ_BdreP9d3";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0bHhvZ2N5emlsZ2h4a3FsYmVqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NzgzOTI1NSwiZXhwIjoyMDkzNDE1MjU1fQ.iEOYU7RX3LtOZNM9Ti7VoBzThH9Q6dK5v-GKJqwG0do";
 
 // ═══════════════════════════════════════════════════════════
 
-const CATS = ["最新文章","足球","籃球","田徑","網球","排球","棒球","活動產業","科技展演","其他"];
+const HOMEPAGE_LIMIT = 12;  // 首頁顯示文章數上限
+const CATS = ["最新文章","籃球","排球","棒球","足球","桌球","羽球","網球","匹克球","游泳","活動產業","科技展演","其他"];
 
-// 從 Supabase 拿文章
 async function fetchArticles() {
-  const url = `${SUPABASE_URL}/rest/v1/articles?select=*&is_published=eq.true&order=published_at.desc&limit=100`;
+  const url = `${SUPABASE_URL}/rest/v1/articles?select=*&is_published=eq.true&order=published_at.desc&limit=200`;
   const res = await fetch(url, {
     headers: {
       "apikey": SUPABASE_ANON_KEY,
@@ -163,6 +164,7 @@ function App() {
   const [cat, setCat] = useState("最新文章");
   const [search, setSearch] = useState("");
   const [sq, setSq] = useState("");
+  const [showAll, setShowAll] = useState(false);
 
   async function refresh() {
     setLoading(true);
@@ -180,17 +182,27 @@ function App() {
 
   useEffect(() => { refresh(); }, []);
 
-  const shown = arts.filter(a => {
+  const filtered = arts.filter(a => {
     const mc = cat === "最新文章" || a.category === cat;
     const ms = !sq || a.title.includes(sq) || (a.summary || "").includes(sq);
     return mc && ms;
   });
+
+  // 首頁限制 12 則（除非按了「顯示全部」或在分類/搜尋模式）
+  const isHome = cat === "最新文章" && !sq;
+  const shown = (isHome && !showAll) ? filtered.slice(0, HOMEPAGE_LIMIT) : filtered;
+
   const feat = arts.filter(a => a.featured).slice(0, 4);
   const sel = arts.find(a => a.id === selId);
 
   function go(id) { setSelId(id); setView("detail"); window.scrollTo(0, 0); }
-  function home() { setView("home"); setSelId(null); }
-  function doSearch(e) { e.preventDefault(); setSq(search); setCat("最新文章"); setView("home"); }
+  function home() { setView("home"); setSelId(null); setShowAll(false); }
+  function doSearch(e) { e.preventDefault(); setSq(search); setCat("最新文章"); setView("home"); setShowAll(true); }
+
+  function changeCat(c) {
+    setCat(c); setSq(""); setSearch(""); setView("home");
+    setShowAll(c !== "最新文章");
+  }
 
   const catCounts = CATS.slice(1).map(c => ({ c, n: arts.filter(a => a.category === c).length }));
   const today = new Date().toLocaleDateString("zh-TW", { year: "numeric", month: "long", day: "numeric", weekday: "long" });
@@ -201,8 +213,8 @@ function App() {
   }
 
   function categoryInitial(cat) {
-    const map = { "足球": "⚽", "籃球": "🏀", "田徑": "🏃", "網球": "🎾", "排球": "🏐", "棒球": "⚾", "活動產業": "🎪", "科技展演": "🚀" };
-    return map[cat] || "新";
+    const map = { "籃球":"🏀","排球":"🏐","棒球":"⚾","足球":"⚽","桌球":"🏓","羽球":"🏸","網球":"🎾","匹克球":"🥒","游泳":"🏊","活動產業":"🎪","科技展演":"🚀" };
+    return map[cat] || "📰";
   }
 
   return (
@@ -224,18 +236,17 @@ function App() {
             </div>
           </div>
           <form className="hsearch" onSubmit={doSearch}>
-            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="搜尋新聞…" />
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="搜尋…" />
             <button type="submit">🔍</button>
           </form>
-          <button className="refresh-btn" onClick={refresh}>🔄 重新整理</button>
+          <button className="refresh-btn" onClick={refresh}>🔄</button>
         </div>
       </div>
 
       <div className="nav">
         <div className="nav-i">
           {CATS.map(c => (
-            <button key={c} className={`nbtn ${cat === c ? "on" : ""}`}
-              onClick={() => { setCat(c); setSq(""); setSearch(""); setView("home"); }}>
+            <button key={c} className={`nbtn ${cat === c ? "on" : ""}`} onClick={() => changeCat(c)}>
               {c}
             </button>
           ))}
@@ -260,8 +271,14 @@ function App() {
             <>
               <div>
                 <div className="sh">
-                  <span className="st">{sq ? `搜尋：「${sq}」` : cat === "最新文章" ? "最新文章" : cat}</span>
-                  <span className="sm">共 {shown.length} 則</span>
+                  <span className="st">
+                    {sq ? `搜尋：「${sq}」` : cat === "最新文章" ? "最新文章" : cat}
+                  </span>
+                  <span className="sm">
+                    {isHome && !showAll
+                      ? `精選 ${shown.length} 則 / 共 ${filtered.length}`
+                      : `共 ${shown.length} 則`}
+                  </span>
                 </div>
 
                 {cat === "最新文章" && !sq && feat.length > 0 && (
@@ -308,31 +325,40 @@ function App() {
                     <p>{arts.length === 0 ? "等自動化腳本跑過幾次，文章就會出現了" : "試試調整搜尋條件或切換分類"}</p>
                   </div>
                 ) : (
-                  <div className="alist">
-                    {shown.map(a => (
-                      <div key={a.id} className="ait" onClick={() => go(a.id)}>
-                        {a.image
-                          ? <img src={a.image} alt={a.title} className="ait-img" />
-                          : <div className="ait-no-img">{categoryInitial(a.category)}</div>
-                        }
-                        <div className="ait-b">
-                          <div className="ait-cat">{a.category}{a.is_ai_generated && <span className="ai-badge">AI</span>}</div>
-                          <div className="ait-t">{a.title}</div>
-                          <div className="ait-s">{a.summary}</div>
-                          <div className="ait-m">
-                            <span>{a.author}</span>
-                            <span>{fmtDate(a.published_at)}</span>
+                  <>
+                    <div className="alist">
+                      {shown.map(a => (
+                        <div key={a.id} className="ait" onClick={() => go(a.id)}>
+                          {a.image
+                            ? <img src={a.image} alt={a.title} className="ait-img" />
+                            : <div className="ait-no-img">{categoryInitial(a.category)}</div>
+                          }
+                          <div className="ait-b">
+                            <div className="ait-cat">{a.category}{a.is_ai_generated && <span className="ai-badge">AI</span>}</div>
+                            <div className="ait-t">{a.title}</div>
+                            <div className="ait-s">{a.summary}</div>
+                            <div className="ait-m">
+                              <span>{a.author}</span>
+                              <span>{fmtDate(a.published_at)}</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+
+                    {/* 「顯示全部」按鈕 — 只在首頁限制中且有更多時顯示 */}
+                    {isHome && !showAll && filtered.length > HOMEPAGE_LIMIT && (
+                      <button className="load-more" onClick={() => setShowAll(true)}>
+                        顯示全部 {filtered.length} 則文章 ↓
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
 
-              <aside className="sb">
+              <aside>
                 <div className="scard">
-                  <div className="shead">精選推薦</div>
+                  <div className="shead">⭐ 精選推薦</div>
                   <div className="slist">
                     {arts.filter(a => a.featured).slice(0, 4).map(a => (
                       <div key={a.id} className="sli" onClick={() => go(a.id)}>
@@ -353,11 +379,11 @@ function App() {
                 </div>
 
                 <div className="scard">
-                  <div className="shead">文章分類</div>
+                  <div className="shead">📂 文章分類</div>
                   <div className="scats">
                     {catCounts.filter(x => x.n > 0).map(({ c, n }) => (
-                      <div key={c} className="scit" onClick={() => { setCat(c); setSq(""); setSearch(""); }}>
-                        <span>{c}</span><span className="scn">{n}</span>
+                      <div key={c} className="scit" onClick={() => changeCat(c)}>
+                        <span>{categoryInitial(c)} {c}</span><span className="scn">{n}</span>
                       </div>
                     ))}
                   </div>
