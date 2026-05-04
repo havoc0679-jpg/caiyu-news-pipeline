@@ -94,8 +94,8 @@ body{background:var(--bg);font-family:var(--sans)}
 .scit:last-child{border-bottom:none}
 .scn{font-size:11px;color:var(--muted)}
 .dw{max-width:760px}
-.dbk{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:14px;transition:color .15s;background:none;border:none;font-family:var(--sans)}
-.dbk:hover{color:var(--blue)}
+.dbk{display:flex;align-items:center;gap:6px;color:white;background:var(--blue);font-size:13px;cursor:pointer;margin-bottom:14px;transition:background .15s;border:none;font-family:var(--sans);padding:8px 16px;border-radius:3px;font-weight:500}
+.dbk:hover{background:var(--blue-d)}
 .dcat{font-size:10px;font-weight:700;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
 .dtitle{font-family:var(--serif);font-size:24px;font-weight:900;line-height:1.5;margin-bottom:12px}
 .dmeta{font-size:12px;color:var(--muted);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);display:flex;gap:16px;flex-wrap:wrap}
@@ -182,6 +182,24 @@ function App() {
 
   useEffect(() => { refresh(); }, []);
 
+  // 監聽瀏覽器上一頁/下一頁按鈕
+  useEffect(() => {
+    function handlePopState(e) {
+      const state = e.state || {};
+      if (state.view === "detail" && state.id) {
+        setSelId(state.id);
+        setView("detail");
+      } else {
+        // 回到首頁狀態
+        setView("home");
+        setSelId(null);
+        setShowAll(false);
+      }
+    }
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
   const filtered = arts.filter(a => {
     const mc = cat === "最新文章" || a.category === cat;
     const ms = !sq || a.title.includes(sq) || (a.summary || "").includes(sq);
@@ -195,14 +213,58 @@ function App() {
   const feat = arts.filter(a => a.featured).slice(0, 4);
   const sel = arts.find(a => a.id === selId);
 
-  function go(id) { setSelId(id); setView("detail"); window.scrollTo(0, 0); }
-  function home() { setView("home"); setSelId(null); setShowAll(false); }
-  function doSearch(e) { e.preventDefault(); setSq(search); setCat("最新文章"); setView("home"); setShowAll(true); }
+  function go(id) {
+    setSelId(id);
+    setView("detail");
+    window.history.pushState({view:"detail",id}, "", "#article-"+id);
+    window.scrollTo(0, 0);
+  }
+  function backToList() {
+    setView("home");
+    setSelId(null);
+    if (window.location.hash) {
+      window.history.pushState({view:"home"}, "", window.location.pathname);
+    }
+    window.scrollTo(0, 0);
+  }
+  function home() {
+    setView("home");
+    setSelId(null);
+    setShowAll(false);
+    setCat("最新文章");
+    setSq("");
+    setSearch("");
+    if (window.location.hash) {
+      window.history.pushState({view:"home"}, "", window.location.pathname);
+    }
+    window.scrollTo(0, 0);
+  }
+  function doSearch(e) { e.preventDefault(); setSq(search); setCat("最新文章"); setView("home"); setShowAll(true); setSelId(null); }
 
   function changeCat(c) {
-    setCat(c); setSq(""); setSearch(""); setView("home");
+    setCat(c); setSq(""); setSearch(""); setView("home"); setSelId(null);
     setShowAll(c !== "最新文章");
+    window.scrollTo(0, 0);
   }
+
+  // 監聽瀏覽器的「上一頁」按鈕
+  useEffect(() => {
+    function onPop() {
+      if (window.location.hash.startsWith("#article-")) {
+        const id = window.location.hash.replace("#article-", "");
+        const idNum = parseInt(id, 10);
+        if (!isNaN(idNum) && arts.find(a => a.id === idNum)) {
+          setSelId(idNum);
+          setView("detail");
+          return;
+        }
+      }
+      setView("home");
+      setSelId(null);
+    }
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [arts]);
 
   const catCounts = CATS.slice(1).map(c => ({ c, n: arts.filter(a => a.category === c).length }));
   const today = new Date().toLocaleDateString("zh-TW", { year: "numeric", month: "long", day: "numeric", weekday: "long" });
@@ -395,7 +457,7 @@ function App() {
           {view === "detail" && sel && (
             <div>
               <div className="dw">
-                <button className="dbk" onClick={home}>← 返回列表</button>
+                <button className="dbk" onClick={backToList}>← 返回列表</button>
                 <div className="dcat">{sel.category}{sel.is_ai_generated && <span className="ai-badge">AI 輔助</span>}</div>
                 <h1 className="dtitle">{sel.title}</h1>
                 <div className="dmeta">
