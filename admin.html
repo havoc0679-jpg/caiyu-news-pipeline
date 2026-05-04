@@ -23,14 +23,10 @@
 }
 body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:100vh}
 #root{min-height:100vh}
-
-/* Login */
 .login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
 .login-box{background:var(--white);border:1px solid var(--border);border-top:4px solid var(--blue);padding:36px;width:360px;max-width:100%}
 .login-title{font-family:var(--serif);font-size:20px;font-weight:900;color:var(--blue);margin-bottom:4px}
 .login-sub{font-size:11px;color:var(--muted);letter-spacing:1.5px;margin-bottom:24px}
-
-/* Layout */
 .layout{display:flex;min-height:100vh}
 .sidebar{width:220px;background:#1a1a2e;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
 .brand{padding:20px 16px;border-bottom:1px solid #333;font-family:var(--serif);font-size:15px;font-weight:900;color:white}
@@ -39,13 +35,9 @@ body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:1
 .nav-btn:hover,.nav-btn.on{background:#0f4285;color:white}
 .nav-badge{margin-left:auto;background:var(--red);color:white;font-size:9px;padding:1px 6px;border-radius:8px}
 .main{flex:1;padding:24px 28px;overflow-x:hidden;min-width:0}
-
-/* Header */
 .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
 .page-title{font-family:var(--serif);font-size:22px;font-weight:900;color:var(--text)}
 .page-sub{font-size:12px;color:var(--muted);margin-top:3px}
-
-/* Stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
 .stat{background:white;border:1px solid var(--border);border-top:3px solid var(--blue);padding:14px 16px}
 .stat-n{font-family:var(--serif);font-size:26px;font-weight:900;color:var(--blue)}
@@ -53,8 +45,11 @@ body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:1
 .stat.r{border-top-color:var(--red)}.stat.r .stat-n{color:var(--red)}
 .stat.g{border-top-color:var(--green)}.stat.g .stat-n{color:var(--green)}
 .stat.y{border-top-color:var(--yellow)}.stat.y .stat-n{color:var(--yellow)}
-
-/* Buttons */
+.cat-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:24px}
+.cat-stat{background:white;border:1px solid var(--border);padding:10px 12px;text-align:center;cursor:pointer;transition:all .15s}
+.cat-stat:hover{border-color:var(--blue);background:var(--blue-l)}
+.cat-stat-n{font-family:var(--serif);font-size:18px;font-weight:900;color:var(--blue)}
+.cat-stat-l{font-size:11px;color:var(--muted);margin-top:2px}
 .btn{background:var(--blue);color:white;border:none;padding:8px 14px;font-size:13px;font-family:var(--sans);cursor:pointer;display:inline-flex;align-items:center;gap:5px;border-radius:3px;transition:all .15s;font-weight:500}
 .btn:hover{background:var(--blue-d)}
 .btn:disabled{background:#ccc;cursor:not-allowed}
@@ -63,27 +58,23 @@ body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:1
 .btn-red{background:var(--red)}.btn-red:hover{background:#b91c1c}
 .btn-ghost{background:none;border:1px solid var(--border);color:var(--t2);padding:7px 13px;font-size:12px;cursor:pointer;border-radius:3px;font-family:var(--sans);transition:all .15s}
 .btn-ghost:hover{border-color:var(--blue);color:var(--blue)}
-
-/* Cards */
 .card{background:white;border:1px solid var(--border);margin-bottom:16px}
 .card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .card-title{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--blue)}
 .card-body{padding:18px}
-
-/* Filters */
 .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .filter-btn{background:none;border:1px solid var(--border);padding:5px 11px;font-size:12px;cursor:pointer;border-radius:3px;color:var(--muted);font-family:var(--sans);transition:all .15s}
 .filter-btn:hover{border-color:var(--blue);color:var(--blue)}
 .filter-btn.on{background:var(--blue);border-color:var(--blue);color:white}
 .search-input{border:1px solid var(--border);padding:6px 12px;font-size:13px;font-family:var(--sans);outline:none;border-radius:3px;width:200px}
 .search-input:focus{border-color:var(--blue)}
-
-/* Table */
 .tbl{width:100%;border-collapse:collapse;background:white}
 .tbl th{background:#fafafa;padding:9px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;text-align:left;border-bottom:2px solid var(--blue)}
 .tbl td{padding:10px 14px;border-bottom:1px solid #f0f0f0;font-size:13px;vertical-align:middle}
 .tbl tr:hover td{background:var(--blue-l)}
 .tbl tr:last-child td{border-bottom:none}
+.t-thumb{width:54px;height:38px;object-fit:cover;border-radius:2px;background:var(--blue-l);display:block}
+.t-thumb-empty{width:54px;height:38px;background:linear-gradient(135deg,var(--blue) 0%,var(--blue-d) 100%);border-radius:2px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:18px}
 .t-title{font-weight:600;max-width:340px;line-height:1.4}
 .t-title .src{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:2px}
 .t-cat{font-size:11px;color:var(--blue);font-weight:700;letter-spacing:.5px;white-space:nowrap}
@@ -97,8 +88,6 @@ body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:1
 .icon-btn{background:none;border:1px solid var(--border);width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:all .15s;border-radius:3px;font-size:13px}
 .icon-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-l)}
 .icon-btn.danger:hover{border-color:var(--red);color:var(--red);background:var(--red-l)}
-
-/* Form */
 .fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
 .fl{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
 .fi,.fs,.ft{border:1px solid var(--border);padding:9px 12px;font-size:13px;font-family:var(--sans);color:var(--text);outline:none;transition:border-color .15s;width:100%;background:white;border-radius:3px}
@@ -108,15 +97,11 @@ body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:1
 .fc2{grid-column:span 2}
 .chk{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t2);cursor:pointer;padding:6px 0}
 .form-foot{display:flex;gap:10px;margin-top:18px;padding-top:14px;border-top:1px solid var(--border);justify-content:flex-end}
-
-/* Alert */
 .alert{padding:10px 14px;font-size:13px;margin-bottom:14px;border-radius:3px;line-height:1.5}
 .alert-err{background:var(--red-l);border:1px solid #fcc;color:var(--red)}
 .alert-ok{background:var(--green-l);border:1px solid #abe5b8;color:#155724}
 .alert-warn{background:var(--yellow-l);border:1px solid #fde68a;color:#92400e}
 .alert-info{background:var(--blue-l);border:1px solid #b8d4f0;color:var(--blue-d)}
-
-/* Run list */
 .run-list{display:flex;flex-direction:column;gap:6px}
 .run-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fafafa;border:1px solid var(--border);border-radius:3px;font-size:12px}
 .run-icon{font-size:14px;flex-shrink:0;width:18px;text-align:center}
@@ -125,21 +110,18 @@ body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:1
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 .kbd{background:#eee;border:1px solid #ccc;padding:1px 5px;font-size:11px;font-family:monospace;border-radius:2px}
-
-/* Help */
 .help{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.7}
 .help a{color:var(--blue)}
-
-/* Empty */
 .empty{padding:50px 20px;text-align:center;color:var(--muted)}
 .empty h3{font-family:var(--serif);font-size:16px;color:var(--text);margin-bottom:6px}
-
-/* Detail preview */
+.image-preview{margin-top:8px;padding:8px;background:#fafafa;border:1px solid var(--border);border-radius:3px;display:flex;align-items:center;gap:10px}
+.image-preview img{width:120px;height:90px;object-fit:cover;border-radius:2px}
+.image-preview-info{flex:1;font-size:11px;color:var(--muted);line-height:1.6;word-break:break-all}
+.image-fail{color:var(--red);font-size:11px;padding:6px 10px;background:var(--red-l);border-radius:2px}
 .detail-pre{padding:18px;background:#fafafa;border:1px solid var(--border);max-height:400px;overflow:auto;border-radius:3px}
 .detail-pre h4{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px}
 .detail-pre .meta{font-size:11px;color:var(--muted);margin-bottom:10px}
 .detail-pre .body{font-size:13px;color:var(--t2);line-height:1.9;white-space:pre-line}
-
 @media(max-width:900px){
   .layout{flex-direction:column}
   .sidebar{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;padding:8px}
@@ -159,32 +141,31 @@ body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:1
 const { useState, useEffect, useMemo } = React;
 
 // ═══════════════════════════════════════════════════════════
-// ⚙️ 設定區：把下面的值改成你自己的
+// ⚙️ 設定區
 // ═══════════════════════════════════════════════════════════
 
-const ADMIN_PASSWORD = "caiyu2025";       // ⚠️ 改成你自己的密碼
-const GITHUB_OWNER = "你的GitHub帳號";      // ⚠️ 改成你的 GitHub 帳號
+const ADMIN_PASSWORD = "caiyu2025";
+const GITHUB_OWNER = "你的GitHub帳號";
 const GITHUB_REPO = "caiyu-news-pipeline";
 const WORKFLOW_FILE = "auto-update.yml";
 
 const SUPABASE_URL = "https://htlxogcyzilghxkqlbej.supabase.co";
-// ⚠️ 注意：這裡需要 service_role key（才能寫入），跟前台 index.html 的 anon key 不同
-// 因為這頁是隱藏管理頁有密碼保護，可以放 service_role
 const SUPABASE_SERVICE_KEY = "你的_service_role_key_貼這裡";
 
 // ═══════════════════════════════════════════════════════════
 
-const CATS = ["足球","籃球","田徑","網球","排球","棒球","活動產業","科技展演","其他"];
+const CATS = ["籃球","排球","棒球","足球","桌球","羽球","網球","匹克球","游泳","活動產業","科技展演","其他"];
 const PAT_KEY = "caiyu_admin_pat";
 const SESSION_KEY = "caiyu_admin_session";
 
+const CAT_ICON = {"籃球":"🏀","排球":"🏐","棒球":"⚾","足球":"⚽","桌球":"🏓","羽球":"🏸","網球":"🎾","匹克球":"🥒","游泳":"🏊","活動產業":"🎪","科技展演":"🚀","其他":"📰"};
+
 const EMPTY_FORM = {
-  title: "", category: "足球", summary: "", content: "",
+  title: "", category: "籃球", summary: "", content: "",
   author: "采毓編輯部", tags: "", featured: false, image: "",
   is_published: true, source_url: "", source_name: ""
 };
 
-// ── Supabase API ──────────────────────────────────────────
 async function supaFetch(path, opts = {}) {
   const url = `${SUPABASE_URL}/rest/v1${path}`;
   const headers = {
@@ -204,7 +185,7 @@ async function supaFetch(path, opts = {}) {
 }
 
 async function listArticles() {
-  return await supaFetch("/articles?select=*&order=published_at.desc&limit=200");
+  return await supaFetch("/articles?select=*&order=published_at.desc&limit=300");
 }
 async function createArticle(data) {
   return await supaFetch("/articles", { method: "POST", body: JSON.stringify(data) });
@@ -216,15 +197,12 @@ async function deleteArticle(id) {
   return await supaFetch(`/articles?id=eq.${id}`, { method: "DELETE" });
 }
 
-// ── App ────────────────────────────────────────────────────
 function App() {
   const [authed, setAuthed] = useState(sessionStorage.getItem(SESSION_KEY) === "ok");
-
   if (!authed) return <Login onLogin={() => setAuthed(true)} />;
   return <Panel onLogout={() => { sessionStorage.removeItem(SESSION_KEY); setAuthed(false); }} />;
 }
 
-// ── Login ──────────────────────────────────────────────────
 function Login({ onLogin }) {
   const [pw, setPw] = useState("");
   const [err, setErr] = useState("");
@@ -253,16 +231,13 @@ function Login({ onLogin }) {
   );
 }
 
-// ── Panel ──────────────────────────────────────────────────
 function Panel({ onLogout }) {
-  const [tab, setTab] = useState("dashboard"); // dashboard | list | form | trigger
+  const [tab, setTab] = useState("dashboard");
   const [arts, setArts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
   const [editId, setEditId] = useState(null);
   const [form, setForm] = useState(EMPTY_FORM);
-
-  // 列表過濾
   const [filterCat, setFilterCat] = useState("全部");
   const [filterStatus, setFilterStatus] = useState("全部");
   const [search, setSearch] = useState("");
@@ -278,7 +253,6 @@ function Panel({ onLogout }) {
 
   useEffect(() => { refresh(); }, []);
 
-  // ── 列表過濾 ──
   const filtered = useMemo(() => {
     return arts.filter(a => {
       const mc = filterCat === "全部" || a.category === filterCat;
@@ -293,7 +267,6 @@ function Panel({ onLogout }) {
     });
   }, [arts, filterCat, filterStatus, search]);
 
-  // ── 統計 ──
   const stats = useMemo(() => ({
     total: arts.length,
     published: arts.filter(a => a.is_published).length,
@@ -301,39 +274,29 @@ function Panel({ onLogout }) {
     ai: arts.filter(a => a.is_ai_generated).length,
   }), [arts]);
 
-  // ── 操作 ──
-  function openNew() {
-    setForm(EMPTY_FORM);
-    setEditId(null);
-    setTab("form");
-  }
+  const catStats = useMemo(() => {
+    return CATS.map(c => ({ c, n: arts.filter(a => a.category === c).length }));
+  }, [arts]);
+
+  function openNew() { setForm(EMPTY_FORM); setEditId(null); setTab("form"); }
   function openEdit(a) {
-    setForm({
-      ...a,
-      tags: Array.isArray(a.tags) ? a.tags.join(", ") : (a.tags || ""),
-    });
-    setEditId(a.id);
-    setTab("form");
+    setForm({...a, tags: Array.isArray(a.tags) ? a.tags.join(", ") : (a.tags || "")});
+    setEditId(a.id); setTab("form");
   }
   async function saveForm(e) {
     e.preventDefault();
     const payload = {
-      title: form.title,
-      category: form.category,
-      summary: form.summary,
-      content: form.content,
+      title: form.title, category: form.category,
+      summary: form.summary, content: form.content,
       author: form.author,
       tags: form.tags ? form.tags.split(",").map(t=>t.trim()).filter(Boolean) : [],
-      featured: form.featured,
-      image: form.image || null,
+      featured: form.featured, image: form.image || null,
       is_published: form.is_published,
-      source_url: form.source_url || null,
-      source_name: form.source_name || null,
+      source_url: form.source_url || null, source_name: form.source_name || null,
     };
     try {
-      if (editId) {
-        await updateArticle(editId, payload);
-      } else {
+      if (editId) await updateArticle(editId, payload);
+      else {
         payload.author = payload.author || "采毓編輯部";
         payload.is_ai_generated = false;
         payload.published_at = new Date().toISOString();
@@ -344,17 +307,13 @@ function Panel({ onLogout }) {
     } catch (e) { alert("儲存失敗：" + e.message); }
   }
   async function toggleField(a, field) {
-    try {
-      await updateArticle(a.id, { [field]: !a[field] });
-      await refresh();
-    } catch (e) { alert("更新失敗：" + e.message); }
+    try { await updateArticle(a.id, { [field]: !a[field] }); await refresh(); }
+    catch (e) { alert("更新失敗：" + e.message); }
   }
   async function delArt(a) {
     if (!confirm(`確定刪除「${a.title}」？`)) return;
-    try {
-      await deleteArticle(a.id);
-      await refresh();
-    } catch (e) { alert("刪除失敗：" + e.message); }
+    try { await deleteArticle(a.id); await refresh(); }
+    catch (e) { alert("刪除失敗：" + e.message); }
   }
 
   return (
@@ -362,7 +321,7 @@ function Panel({ onLogout }) {
       <aside className="sidebar">
         <div className="brand">采毓新聞後台<small>NEWS CMS SYSTEM</small></div>
         <button className={`nav-btn ${tab==="dashboard"?"on":""}`} onClick={()=>setTab("dashboard")}>📊 總覽</button>
-        <button className={`nav-btn ${tab==="list"?"on":""}`} onClick={()=>setTab("list")}>
+        <button className={`nav-btn ${tab==="list"?"on":""}`} onClick={()=>{setFilterCat("全部");setFilterStatus("全部");setSearch("");setTab("list");}}>
           📋 文章列表 <span className="nav-badge">{stats.total}</span>
         </button>
         <button className={`nav-btn ${tab==="form"?"on":""}`} onClick={openNew}>✏️ 新增文章</button>
@@ -375,46 +334,28 @@ function Panel({ onLogout }) {
       <main className="main">
         {err && <div className="alert alert-err">⚠️ {err}</div>}
 
-        {tab === "dashboard" && (
-          <Dashboard stats={stats} arts={arts} setTab={setTab} />
-        )}
-
+        {tab === "dashboard" && <Dashboard stats={stats} catStats={catStats} arts={arts} setTab={setTab} setFilterCat={setFilterCat} />}
         {tab === "list" && (
           <ArticleList
-            arts={filtered}
-            allCats={CATS}
+            arts={filtered} allCats={CATS}
             filterCat={filterCat} setFilterCat={setFilterCat}
             filterStatus={filterStatus} setFilterStatus={setFilterStatus}
             search={search} setSearch={setSearch}
-            onNew={openNew}
-            onEdit={openEdit}
-            onToggleField={toggleField}
-            onDelete={delArt}
-            loading={loading}
-            onRefresh={refresh}
+            onNew={openNew} onEdit={openEdit}
+            onToggleField={toggleField} onDelete={delArt}
+            loading={loading} onRefresh={refresh}
           />
         )}
-
-        {tab === "form" && (
-          <ArticleForm
-            form={form} setForm={setForm}
-            editId={editId}
-            onSave={saveForm}
-            onCancel={()=>setTab("list")}
-          />
-        )}
-
-        {tab === "trigger" && (
-          <TriggerPanel />
-        )}
+        {tab === "form" && <ArticleForm form={form} setForm={setForm} editId={editId} onSave={saveForm} onCancel={()=>setTab("list")} />}
+        {tab === "trigger" && <TriggerPanel />}
       </main>
     </div>
   );
 }
 
-// ── Dashboard ──────────────────────────────────────────────
-function Dashboard({ stats, arts, setTab }) {
+function Dashboard({ stats, catStats, arts, setTab, setFilterCat }) {
   const recent = arts.slice(0, 5);
+  function gotoCat(c) { setFilterCat(c); setTab("list"); }
   return (
     <>
       <div className="page-header">
@@ -436,21 +377,33 @@ function Dashboard({ stats, arts, setTab }) {
       </div>
 
       <div className="card">
+        <div className="card-head"><div className="card-title">📊 各分類文章數</div></div>
+        <div className="card-body" style={{paddingTop:12}}>
+          <div className="cat-stats">
+            {catStats.map(({c, n}) => (
+              <div key={c} className="cat-stat" onClick={()=>gotoCat(c)}>
+                <div style={{fontSize:18}}>{CAT_ICON[c]}</div>
+                <div className="cat-stat-n">{n}</div>
+                <div className="cat-stat-l">{c}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="card">
         <div className="card-head">
-          <div className="card-title">📰 最近 5 篇文章</div>
+          <div className="card-title">📰 最近 5 篇</div>
           <button className="btn-ghost" onClick={()=>setTab("list")}>查看全部 →</button>
         </div>
         <table className="tbl">
-          <thead>
-            <tr>
-              <th>標題</th><th>分類</th><th>狀態</th><th>日期</th>
-            </tr>
-          </thead>
+          <thead><tr><th>圖</th><th>標題</th><th>分類</th><th>狀態</th><th>日期</th></tr></thead>
           <tbody>
             {recent.length === 0 ? (
-              <tr><td colSpan="4" style={{textAlign:"center",padding:30,color:"#888"}}>還沒有文章。執行 pipeline 或手動新增吧！</td></tr>
+              <tr><td colSpan="5" style={{textAlign:"center",padding:30,color:"#888"}}>還沒有文章</td></tr>
             ) : recent.map(a => (
               <tr key={a.id}>
+                <td>{a.image ? <img src={a.image} className="t-thumb" alt=""/> : <div className="t-thumb-empty">{CAT_ICON[a.category]||"📰"}</div>}</td>
                 <td className="t-title">{a.title}</td>
                 <td className="t-cat">{a.category}</td>
                 <td>
@@ -468,7 +421,6 @@ function Dashboard({ stats, arts, setTab }) {
   );
 }
 
-// ── Article List ──────────────────────────────────────────
 function ArticleList({ arts, allCats, filterCat, setFilterCat, filterStatus, setFilterStatus, search, setSearch, onNew, onEdit, onToggleField, onDelete, loading, onRefresh }) {
   return (
     <>
@@ -488,7 +440,9 @@ function ArticleList({ arts, allCats, filterCat, setFilterCat, filterStatus, set
           <div className="filters">
             <span style={{fontSize:11,color:"var(--muted)",marginRight:4,letterSpacing:1,textTransform:"uppercase",fontWeight:700}}>分類</span>
             {["全部", ...allCats].map(c => (
-              <button key={c} className={`filter-btn ${filterCat===c?"on":""}`} onClick={()=>setFilterCat(c)}>{c}</button>
+              <button key={c} className={`filter-btn ${filterCat===c?"on":""}`} onClick={()=>setFilterCat(c)}>
+                {CAT_ICON[c] || ""} {c}
+              </button>
             ))}
           </div>
           <div className="filters">
@@ -496,27 +450,24 @@ function ArticleList({ arts, allCats, filterCat, setFilterCat, filterStatus, set
             {["全部","已發布","未發布","精選","AI生成","人工"].map(s => (
               <button key={s} className={`filter-btn ${filterStatus===s?"on":""}`} onClick={()=>setFilterStatus(s)}>{s}</button>
             ))}
-            <input className="search-input" value={search} onChange={e=>setSearch(e.target.value)} placeholder="🔍 搜尋標題或摘要…" style={{marginLeft:"auto"}} />
+            <input className="search-input" value={search} onChange={e=>setSearch(e.target.value)} placeholder="🔍 搜尋…" style={{marginLeft:"auto"}} />
           </div>
         </div>
-        {loading ? (
-          <div className="empty">載入中…</div>
-        ) : arts.length === 0 ? (
-          <div className="empty"><h3>沒有符合條件的文章</h3><p>試試調整篩選條件，或新增一篇</p></div>
-        ) : (
+        {loading ? (<div className="empty">載入中…</div>)
+          : arts.length === 0 ? (<div className="empty"><h3>沒有符合條件的文章</h3></div>)
+          : (
           <table className="tbl">
             <thead>
               <tr>
-                <th style={{width:"40%"}}>標題</th>
-                <th>分類</th>
-                <th>狀態</th>
-                <th>日期</th>
-                <th>操作</th>
+                <th style={{width:64}}>圖</th>
+                <th style={{width:"36%"}}>標題</th>
+                <th>分類</th><th>狀態</th><th>日期</th><th>操作</th>
               </tr>
             </thead>
             <tbody>
               {arts.map(a => (
                 <tr key={a.id}>
+                  <td>{a.image ? <img src={a.image} className="t-thumb" alt=""/> : <div className="t-thumb-empty">{CAT_ICON[a.category]||"📰"}</div>}</td>
                   <td className="t-title">
                     {a.title}
                     {a.source_name && <span className="src">📎 {a.source_name}</span>}
@@ -548,9 +499,10 @@ function ArticleList({ arts, allCats, filterCat, setFilterCat, filterStatus, set
   );
 }
 
-// ── Article Form ──────────────────────────────────────────
 function ArticleForm({ form, setForm, editId, onSave, onCancel }) {
+  const [imgErr, setImgErr] = useState(false);
   function fc(k, v) { setForm(f => ({...f, [k]: v})); }
+
   return (
     <>
       <div className="page-header">
@@ -570,7 +522,7 @@ function ArticleForm({ form, setForm, editId, onSave, onCancel }) {
             <div className="fg">
               <label className="fl">分類 *</label>
               <select className="fs" value={form.category} onChange={e=>fc("category",e.target.value)}>
-                {CATS.map(c => <option key={c} value={c}>{c}</option>)}
+                {CATS.map(c => <option key={c} value={c}>{CAT_ICON[c]} {c}</option>)}
               </select>
             </div>
             <div className="fg">
@@ -578,8 +530,28 @@ function ArticleForm({ form, setForm, editId, onSave, onCancel }) {
               <input className="fi" value={form.author} onChange={e=>fc("author",e.target.value)} />
             </div>
             <div className="fg fc2">
-              <label className="fl">封面圖片網址</label>
-              <input className="fi" value={form.image||""} onChange={e=>fc("image",e.target.value)} placeholder="https://..." />
+              <label className="fl">📷 封面圖片網址</label>
+              <input className="fi" value={form.image||""} onChange={e=>{fc("image",e.target.value);setImgErr(false);}} placeholder="https://..." />
+              {form.image && (
+                <div className="image-preview">
+                  {imgErr ? (
+                    <div className="image-fail">❌ 圖片無法載入。請確認網址是否正確、可公開存取</div>
+                  ) : (
+                    <>
+                      <img src={form.image} alt="預覽" onError={()=>setImgErr(true)} />
+                      <div className="image-preview-info">
+                        <div>📐 圖片預覽（前台會以 16:9 比例顯示）</div>
+                        <div style={{marginTop:4,fontSize:10}}>{form.image}</div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+              <div className="help">
+                💡 推薦來源：<a href="https://unsplash.com" target="_blank">Unsplash</a>、
+                <a href="https://www.pexels.com" target="_blank">Pexels</a>（免費商用）。
+                建議尺寸：800x600 以上，比例 4:3 或 16:9
+              </div>
             </div>
             <div className="fg fc2">
               <label className="fl">摘要</label>
@@ -587,7 +559,7 @@ function ArticleForm({ form, setForm, editId, onSave, onCancel }) {
             </div>
             <div className="fg fc2">
               <label className="fl">內文 *</label>
-              <textarea className="ft" required style={{minHeight:240}} value={form.content||""} onChange={e=>fc("content",e.target.value)} placeholder="文章正文…&#10;&#10;采毓觀點&#10;&#10;（可選的觀點段落）&#10;&#10;資料整理自：xxx" />
+              <textarea className="ft" required style={{minHeight:240}} value={form.content||""} onChange={e=>fc("content",e.target.value)} placeholder="文章正文…" />
             </div>
             <div className="fg">
               <label className="fl">標籤（逗號分隔）</label>
@@ -618,7 +590,7 @@ function ArticleForm({ form, setForm, editId, onSave, onCancel }) {
               <label className="fl" style={{marginBottom:6,display:"block"}}>內文預覽</label>
               <div className="detail-pre">
                 <h4>{form.title || "(尚無標題)"}</h4>
-                <div className="meta">{form.author} · {form.category}</div>
+                <div className="meta">{form.author} · {CAT_ICON[form.category]} {form.category}</div>
                 {form.summary && <div style={{padding:10,background:"var(--blue-l)",borderLeft:"3px solid var(--blue)",marginBottom:10,fontSize:13,fontStyle:"italic"}}>{form.summary}</div>}
                 <div className="body">{form.content}</div>
               </div>
@@ -635,7 +607,6 @@ function ArticleForm({ form, setForm, editId, onSave, onCancel }) {
   );
 }
 
-// ── Trigger Panel ──────────────────────────────────────────
 function TriggerPanel() {
   const [pat, setPat] = useState(localStorage.getItem(PAT_KEY) || "");
   const [savedPat, setSavedPat] = useState(!!localStorage.getItem(PAT_KEY));
@@ -672,16 +643,12 @@ function TriggerPanel() {
     try {
       const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/actions/workflows/${WORKFLOW_FILE}/dispatches`, {
         method: "POST",
-        headers: {
-          "Accept": "application/vnd.github+json",
-          "Authorization": `Bearer ${pat}`,
-          "X-GitHub-Api-Version": "2022-11-28",
-        },
+        headers: { "Accept": "application/vnd.github+json", "Authorization": `Bearer ${pat}`, "X-GitHub-Api-Version": "2022-11-28" },
         body: JSON.stringify({ ref: "main" }),
       });
       if (res.status === 204) {
         if (!savedPat) { localStorage.setItem(PAT_KEY, pat); setSavedPat(true); }
-        setMsg({ type: "ok", text: "✅ 已成功觸發！pipeline 大約 30-90 秒後完成。可往下看執行紀錄。" });
+        setMsg({ type: "ok", text: "✅ 已成功觸發！pipeline 大約 3-8 分鐘後完成（11 個分類要跑）。" });
         setTimeout(loadRuns, 2500);
       } else {
         const txt = await res.text();
@@ -707,7 +674,7 @@ function TriggerPanel() {
       <div className="page-header">
         <div>
           <div className="page-title">⚡ 立即抓取新聞</div>
-          <div className="page-sub">手動觸發 GitHub Actions 立刻執行 pipeline</div>
+          <div className="page-sub">手動觸發 GitHub Actions 立刻執行 pipeline · 每類 2 篇 / 上限 12 篇</div>
         </div>
         <button className="btn-ghost" onClick={loadRuns}>🔄 重新整理</button>
       </div>
