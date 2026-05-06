@@ -146,12 +146,12 @@ const { useState, useEffect, useMemo } = React;
 // ═══════════════════════════════════════════════════════════
 
 const ADMIN_PASSWORD = "caiyu2025";
-const GITHUB_OWNER = "你的GitHub帳號";
+const GITHUB_OWNER = "havoc0679-jpg";
 const GITHUB_REPO = "caiyu-news-pipeline";
 const WORKFLOW_FILE = "auto-update.yml";
 
 const SUPABASE_URL = "https://htlxogcyzilghxkqlbej.supabase.co";
-const SUPABASE_SERVICE_KEY = "你的_service_role_key_貼這裡";
+const SUPABASE_SERVICE_KEY = "PASTE_YOUR_SERVICE_ROLE_KEY_HERE";
 
 // ═══════════════════════════════════════════════════════════
 
@@ -617,7 +617,7 @@ function TriggerPanel() {
   const [loadingRuns, setLoadingRuns] = useState(false);
 
   async function loadRuns() {
-    if (!savedPat || GITHUB_OWNER === "你的GitHub帳號") return;
+    if (!savedPat) return;
     setLoadingRuns(true);
     try {
       const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/actions/workflows/${WORKFLOW_FILE}/runs?per_page=8`, {
@@ -634,8 +634,8 @@ function TriggerPanel() {
   useEffect(() => { loadRuns(); }, [savedPat]);
 
   async function trigger() {
-    if (GITHUB_OWNER === "你的GitHub帳號") {
-      setMsg({ type: "err", text: "請先在 admin.html 開頭把 GITHUB_OWNER 改成你的 GitHub 帳號" });
+    if (!GITHUB_OWNER || GITHUB_OWNER.length < 2) {
+      setMsg({ type: "err", text: "GITHUB_OWNER not configured properly in admin.html" });
       return;
     }
     if (!pat) { setMsg({ type: "err", text: "請先輸入 GitHub PAT" }); return; }
